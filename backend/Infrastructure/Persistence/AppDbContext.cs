@@ -16,6 +16,8 @@ public sealed class AppDbContext(
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
     public DbSet<Payment> Payments => Set<Payment>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<Drop> Drops => Set<Drop>();
+    public DbSet<PickupPoint> PickupPoints => Set<PickupPoint>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

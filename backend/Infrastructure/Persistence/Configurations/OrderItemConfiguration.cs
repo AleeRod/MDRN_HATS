@@ -11,6 +11,8 @@ public sealed class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
         builder.ToTable("OrderItems");
         builder.HasKey(item => item.Id);
         builder.Property(item => item.ProductName).HasMaxLength(200).IsRequired();
+        builder.Property(item => item.VariantDescription)
+            .HasMaxLength(200);
         builder.Property(item => item.UnitPrice).HasPrecision(12, 2);
         builder.HasIndex(item => item.ProductId);
         builder.HasOne(item => item.Product)

@@ -14,5 +14,12 @@ public sealed class PaymentConfiguration : IEntityTypeConfiguration<Payment>
         builder.Property(payment => payment.Provider).HasMaxLength(100).IsRequired();
         builder.Property(payment => payment.ProviderReference).HasMaxLength(200);
         builder.Property(payment => payment.Status).HasMaxLength(40).IsRequired();
+        builder.Property(payment => payment.ProofUrl)
+            .HasMaxLength(2048);
+        builder.HasOne(payment => payment.ReviewedByUser)
+            .WithMany()
+            .HasForeignKey(payment => payment.ReviewedByUserId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -11,4 +11,6 @@ public sealed class Product
     public DateTime UpdatedAtUtc { get; set; } = DateTime.UtcNow;
     public ICollection<ProductVariant> Variants { get; set; } = new List<ProductVariant>();
     public ICollection<ProductImage> Images { get; set; } = new List<ProductImage>();
+    public Guid? DropId { get; set; }
+    public Drop? Drop { get; set; }
 }

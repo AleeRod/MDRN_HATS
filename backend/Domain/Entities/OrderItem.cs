@@ -12,4 +12,5 @@ public sealed class OrderItem
     public Order Order { get; set; } = null!;
     public Product Product { get; set; } = null!;
     public ProductVariant? ProductVariant { get; set; }
+    public string VariantDescription { get; set; } = string.Empty;
 }

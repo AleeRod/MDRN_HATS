@@ -10,4 +10,8 @@ public sealed class Payment
     public string Status { get; set; } = string.Empty;
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
     public Order Order { get; set; } = null!;
+    public string? ProofUrl { get; set; }
+    public DateTime? ReviewedAtUtc { get; set; }
+    public Guid? ReviewedByUserId { get; set; }
+    public User? ReviewedByUser { get; set; }
 }

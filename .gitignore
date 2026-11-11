@@ -5,6 +5,8 @@
 frontend/.env
 frontend/.env.*
 !frontend/.env.example
+scripts/progreso_issues.json
+scripts/mdrn_hats_backlog_jira.csv
 
 # .NET
 **/bin/

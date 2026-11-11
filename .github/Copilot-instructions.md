@@ -1,6 +1,5 @@
 # Tienda de gorras
-
-E-commerce: tienda pública + panel admin + (futuro) PWA/app móvil.
+E-commerce: tienda pública + panel admin
 
 ## Stack
 - Backend: .NET 8 Web API, EF Core, PostgreSQL (Supabase)

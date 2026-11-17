@@ -29,4 +29,4 @@ E-commerce: tienda pública + panel admin + (futuro) PWA/app móvil.
 ## Comandos
 - Backend: `dotnet run --project backend/Api`
 - Frontend: `npm run dev` (en /frontend)
-- Todo local: `docker compose up`
+- API y frontend local: ejecutar ambos comandos en terminales separadas

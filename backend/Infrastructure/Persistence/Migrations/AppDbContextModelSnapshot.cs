@@ -22,6 +22,93 @@ namespace MDRN_HATS.Infrastructure.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("MDRN_HATS.Domain.Entities.Drop", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("BackgroundColor")
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<string>("BannerUrl")
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)");
+
+                    b.Property<string>("ButtonColor")
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<string>("CollaboratorName")
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<DateTime?>("EndsAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("PrimaryColor")
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<string>("SecondaryColor")
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)");
+
+                    b.Property<DateTime?>("StartsAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("TextColor")
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
+
+                    b.HasIndex("Active", "StartsAtUtc", "EndsAtUtc");
+
+                    b.ToTable("Drops", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_Drops_BackgroundColor_Format", "\"BackgroundColor\" IS NULL OR \"BackgroundColor\" ~ '^#[0-9A-Fa-f]{6}$'");
+
+                            t.HasCheckConstraint("CK_Drops_ButtonColor_Format", "\"ButtonColor\" IS NULL OR \"ButtonColor\" ~ '^#[0-9A-Fa-f]{6}$'");
+
+                            t.HasCheckConstraint("CK_Drops_PrimaryColor_Format", "\"PrimaryColor\" IS NULL OR \"PrimaryColor\" ~ '^#[0-9A-Fa-f]{6}$'");
+
+                            t.HasCheckConstraint("CK_Drops_SecondaryColor_Format", "\"SecondaryColor\" IS NULL OR \"SecondaryColor\" ~ '^#[0-9A-Fa-f]{6}$'");
+
+                            t.HasCheckConstraint("CK_Drops_Slug_Format", "\"Slug\" ~ '^[a-z0-9-]+$'");
+
+                            t.HasCheckConstraint("CK_Drops_TextColor_Format", "\"TextColor\" IS NULL OR \"TextColor\" ~ '^#[0-9A-Fa-f]{6}$'");
+                        });
+                });
+
             modelBuilder.Entity("MDRN_HATS.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
@@ -31,15 +118,60 @@ namespace MDRN_HATS.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("CustomerEmail")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("CustomerPhone")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("DeliveryAddress")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("DeliveryInstructions")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("DeliveryMethod")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<string>("PickupPointAddressSnapshot")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<Guid?>("PickupPointId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("PickupPointNameSnapshot")
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<decimal>("Total")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("numeric(12,2)");
+
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PickupPointId");
 
                     b.HasIndex("UserId", "CreatedAtUtc");
 
@@ -73,6 +205,11 @@ namespace MDRN_HATS.Infrastructure.Persistence.Migrations
                         .HasPrecision(12, 2)
                         .HasColumnType("numeric(12,2)");
 
+                    b.Property<string>("VariantDescription")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
@@ -100,6 +237,10 @@ namespace MDRN_HATS.Infrastructure.Persistence.Migrations
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("ProofUrl")
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)");
+
                     b.Property<string>("Provider")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -110,6 +251,12 @@ namespace MDRN_HATS.Infrastructure.Persistence.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
+                    b.Property<DateTime?>("ReviewedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("ReviewedByUserId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(40)
@@ -119,7 +266,45 @@ namespace MDRN_HATS.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("OrderId");
 
+                    b.HasIndex("ReviewedByUserId");
+
                     b.ToTable("Payments", (string)null);
+                });
+
+            modelBuilder.Entity("MDRN_HATS.Domain.Entities.PickupPoint", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Instructions")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Active");
+
+                    b.ToTable("PickupPoints", (string)null);
                 });
 
             modelBuilder.Entity("MDRN_HATS.Domain.Entities.Product", b =>
@@ -143,6 +328,9 @@ namespace MDRN_HATS.Infrastructure.Persistence.Migrations
                         .HasMaxLength(4000)
                         .HasColumnType("character varying(4000)");
 
+                    b.Property<Guid?>("DropId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -154,6 +342,8 @@ namespace MDRN_HATS.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Active");
+
+                    b.HasIndex("DropId");
 
                     b.ToTable("Products", (string)null);
                 });
@@ -462,11 +652,17 @@ namespace MDRN_HATS.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("MDRN_HATS.Domain.Entities.Order", b =>
                 {
+                    b.HasOne("MDRN_HATS.Domain.Entities.PickupPoint", "PickupPoint")
+                        .WithMany("Orders")
+                        .HasForeignKey("PickupPointId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("MDRN_HATS.Domain.Entities.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("PickupPoint");
 
                     b.Navigation("User");
                 });
@@ -505,7 +701,24 @@ namespace MDRN_HATS.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MDRN_HATS.Domain.Entities.User", "ReviewedByUser")
+                        .WithMany()
+                        .HasForeignKey("ReviewedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Order");
+
+                    b.Navigation("ReviewedByUser");
+                });
+
+            modelBuilder.Entity("MDRN_HATS.Domain.Entities.Product", b =>
+                {
+                    b.HasOne("MDRN_HATS.Domain.Entities.Drop", "Drop")
+                        .WithMany("Products")
+                        .HasForeignKey("DropId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Drop");
                 });
 
             modelBuilder.Entity("MDRN_HATS.Domain.Entities.ProductImage", b =>
@@ -590,11 +803,21 @@ namespace MDRN_HATS.Infrastructure.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MDRN_HATS.Domain.Entities.Drop", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("MDRN_HATS.Domain.Entities.Order", b =>
                 {
                     b.Navigation("Items");
 
                     b.Navigation("Payments");
+                });
+
+            modelBuilder.Entity("MDRN_HATS.Domain.Entities.PickupPoint", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("MDRN_HATS.Domain.Entities.Product", b =>

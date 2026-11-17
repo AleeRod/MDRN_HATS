@@ -26,6 +26,6 @@ public sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
             .WithMany(drop => drop.Products)
             .HasForeignKey(product => product.DropId)
             .IsRequired(false)
-            .OnDelete(DeleteBehavior.SetNull);
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

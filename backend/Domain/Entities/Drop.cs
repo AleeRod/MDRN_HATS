@@ -6,8 +6,15 @@ public sealed class Drop
 
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
+    public string Slug { get; set; } = string.Empty;
+    public string? CollaboratorName { get; set; }
 
     public string? BannerUrl { get; set; }
+    public string? PrimaryColor { get; set; }
+    public string? SecondaryColor { get; set; }
+    public string? BackgroundColor { get; set; }
+    public string? TextColor { get; set; }
+    public string? ButtonColor { get; set; }
 
     public DateTime? StartsAtUtc { get; set; }
     public DateTime? EndsAtUtc { get; set; }

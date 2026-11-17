@@ -1,7 +1,6 @@
 # Environment and secrets
 .env
 .env.*
-!.env.example
 frontend/.env
 frontend/.env.*
 !frontend/.env.example
@@ -29,3 +28,7 @@ Thumbs.db
 
 # Local database backups
 backups/
+
+progreso_issues.json
+
+progreso_issues.json

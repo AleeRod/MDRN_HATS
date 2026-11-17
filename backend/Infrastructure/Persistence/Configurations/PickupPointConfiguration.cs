@@ -19,7 +19,7 @@ public sealed class PickupPointConfiguration : IEntityTypeConfiguration<PickupPo
             .HasMaxLength(500)
             .IsRequired();
 
-        builder.Property(point => point.Description)
+        builder.Property(point => point.Instructions)
             .HasMaxLength(1000);
 
         builder.HasIndex(point => point.Active);
